@@ -175,3 +175,130 @@ font-weight: bold;
 .redraw-button:hover {
     background: #d1d5db;
 }
+
+/* =========================
+   スマホ対応
+   ========================= */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 15px 8px;
+    }
+
+    .container {
+        width: 100%;
+    }
+
+    h1 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    section {
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    /* 参加者 */
+    .player {
+        display: grid;
+        grid-template-columns: 1fr auto auto;
+        gap: 6px;
+        align-items: center;
+    }
+
+    .player input {
+        width: 100%;
+        min-width: 0;
+        padding: 10px 8px;
+        font-size: 16px;
+    }
+
+    .player select {
+        width: 100px;
+        padding: 10px 5px;
+        font-size: 14px;
+    }
+
+    .spectator {
+        gap: 3px;
+        font-size: 14px;
+    }
+
+    .spectator input {
+        width: 18px;
+        height: 18px;
+    }
+
+    .remove-button {
+        width: 38px;
+        height: 38px;
+        font-size: 18px;
+    }
+
+    /* 参加者追加 */
+    .add-button {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    /* チーム数 */
+    #teamCount {
+        padding: 8px;
+        font-size: 16px;
+    }
+
+    /* チーム人数 */
+    .team-size {
+        margin-bottom: 12px;
+    }
+
+    .team-size input {
+        width: 70px;
+        padding: 8px;
+        margin-left: 5px;
+        font-size: 16px;
+    }
+
+    /* チーム分けボタン */
+    .divide-button {
+        padding: 14px;
+        font-size: 17px;
+    }
+
+    /* 振り直しボタン */
+    .redraw-button {
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    /* 結果 */
+    .result-team {
+        padding: 12px;
+        margin-bottom: 15px;
+    }
+
+    .result-team h3 {
+        font-size: 18px;
+    }
+
+    .player-result {
+        padding: 8px 0;
+        font-size: 15px;
+    }
+
+    .total {
+        font-size: 15px;
+    }
+
+    .difference {
+        font-size: 16px;
+        padding: 5px;
+    }
+}
