@@ -1,15 +1,35 @@
-const playersElement = document.getElementById("players");
-const addPlayerButton = document.getElementById("addPlayerButton");
-const teamCountElement = document.getElementById("teamCount");
-const teamSizesElement = document.getElementById("teamSizes");
-const divideButton = document.getElementById("divideButton");
-const redrawButton = document.getElementById("redrawButton");
-const resultSection = document.getElementById("resultSection");
-const resultElement = document.getElementById("result");
+const playersElement =
+    document.getElementById("players");
+
+const addPlayerButton =
+    document.getElementById("addPlayerButton");
+
+const powerTypeElement =
+    document.getElementById("powerType");
+
+const teamCountElement =
+    document.getElementById("teamCount");
+
+const teamSizesElement =
+    document.getElementById("teamSizes");
+
+const divideButton =
+    document.getElementById("divideButton");
+
+const redrawButton =
+    document.getElementById("redrawButton");
+
+const resultSection =
+    document.getElementById("resultSection");
+
+const resultElement =
+    document.getElementById("result");
 
 
 /*
- * ランク一覧
+ * =========================
+ * ウデマエ一覧
+ * =========================
  *
  * C-  = 1
  * C   = 2
@@ -28,191 +48,530 @@ const resultElement = document.getElementById("result");
  */
 
 const ranks = [
+
     { name: "C-", value: 1 },
+
     { name: "C", value: 2 },
+
     { name: "C+", value: 3 },
+
     { name: "B-", value: 4 },
+
     { name: "B", value: 5 },
+
     { name: "B+", value: 6 },
+
     { name: "A-", value: 7 },
+
     { name: "A", value: 8 },
+
     { name: "A+", value: 9 },
+
     { name: "S", value: 10 }
+
 ];
 
+
 for (let i = 0; i <= 50; i++) {
+
     ranks.push({
+
         name: "S+" + i,
+
         value: 11 + i
+
     });
+
 }
 
 
 /*
- * ランク選択欄を作成
+ * =========================
+ * ウデマエ選択欄
+ * =========================
  */
+
 function createRankSelect() {
 
-    const select = document.createElement("select");
+    const select =
+        document.createElement("select");
+
 
     for (let i = 0; i < ranks.length; i++) {
 
-        const option = document.createElement("option");
+        const option =
+            document.createElement("option");
 
-        option.value = ranks[i].value;
+
+        option.value =
+            ranks[i].value;
+
+
         option.textContent =
-            ranks[i].name + " (" + ranks[i].value + ")";
+            ranks[i].name
+            + " ("
+            + ranks[i].value
+            + ")";
+
 
         select.appendChild(option);
     }
+
 
     return select;
 }
 
 
 /*
- * 参加者を追加
+ * =========================
+ * XP入力欄
+ * =========================
  */
+
+function createXPInput() {
+
+    const input =
+        document.createElement("input");
+
+
+    input.type = "number";
+
+    input.placeholder = "XP";
+
+    input.className = "xp-input";
+
+
+    return input;
+}
+
+
+/*
+ * =========================
+ * 参加者追加
+ * =========================
+ */
+
 function addPlayer() {
 
-    const player = document.createElement("div");
+    const player =
+        document.createElement("div");
+
 
     player.className = "player";
 
 
-    /* 名前 */
-    const nameInput = document.createElement("input");
+    /*
+     * 名前
+     */
+
+    const nameInput =
+        document.createElement("input");
+
 
     nameInput.type = "text";
+
     nameInput.placeholder = "名前";
 
 
-    /* ランク */
-    const rankSelect = createRankSelect();
+    /*
+     * 実力入力欄
+     */
+
+    let powerInput;
 
 
-    /* 観戦チェックボックス */
-    const spectatorDiv = document.createElement("div");
+    if (powerTypeElement.value === "rank") {
 
-    spectatorDiv.className = "spectator";
+        powerInput =
+            createRankSelect();
+
+    } else {
+
+        powerInput =
+            createXPInput();
+
+    }
+
+
+    /*
+     * 観戦
+     */
+
+    const spectatorDiv =
+        document.createElement("div");
+
+
+    spectatorDiv.className =
+        "spectator";
 
 
     const spectatorCheck =
         document.createElement("input");
 
-    spectatorCheck.type = "checkbox";
-    spectatorCheck.className = "spectator-check";
+
+    spectatorCheck.type =
+        "checkbox";
+
+
+    spectatorCheck.className =
+        "spectator-check";
 
 
     const spectatorLabel =
         document.createElement("label");
 
-    spectatorLabel.textContent = "観戦";
+
+    spectatorLabel.textContent =
+        "観戦";
 
 
-    spectatorDiv.appendChild(spectatorCheck);
-    spectatorDiv.appendChild(spectatorLabel);
+    spectatorDiv.appendChild(
+        spectatorCheck
+    );
+
+    spectatorDiv.appendChild(
+        spectatorLabel
+    );
 
 
-    /* 削除ボタン */
+    /*
+     * 削除
+     */
+
     const removeButton =
         document.createElement("button");
 
-    removeButton.className = "remove-button";
-    removeButton.textContent = "×";
+
+    removeButton.className =
+        "remove-button";
+
+
+    removeButton.textContent =
+        "×";
 
 
     removeButton.addEventListener(
         "click",
         function() {
+
             player.remove();
+
         }
     );
 
 
-    /* 画面に追加 */
-    player.appendChild(nameInput);
-    player.appendChild(rankSelect);
-    player.appendChild(spectatorDiv);
-    player.appendChild(removeButton);
+    /*
+     * 画面に追加
+     */
 
-    playersElement.appendChild(player);
+    player.appendChild(
+        nameInput
+    );
+
+    player.appendChild(
+        powerInput
+    );
+
+    player.appendChild(
+        spectatorDiv
+    );
+
+    player.appendChild(
+        removeButton
+    );
+
+
+    playersElement.appendChild(
+        player
+    );
 }
 
 
 /*
- * チーム数を変更
+ * =========================
+ * 全参加者の実力入力欄を更新
+ * =========================
+ *
+ * ウデマエ → XP
+ * XP → ウデマエ
  */
+
+function updatePowerInputs() {
+
+    const playerElements =
+        playersElement.querySelectorAll(
+            ".player"
+        );
+
+
+    for (
+        let i = 0;
+        i < playerElements.length;
+        i++
+    ) {
+
+        const player =
+            playerElements[i];
+
+
+        /*
+         * 現在の名前を保存
+         */
+
+        const nameInput =
+            player.querySelector(
+                "input[type='text']"
+            );
+
+
+        const name =
+            nameInput.value;
+
+
+        /*
+         * 現在の観戦状態を保存
+         */
+
+        const spectatorCheck =
+            player.querySelector(
+                ".spectator-check"
+            );
+
+
+        const spectator =
+            spectatorCheck.checked;
+
+
+        /*
+         * 現在の実力
+         */
+
+        const oldSelect =
+            player.querySelector(
+                "select"
+            );
+
+
+        const oldXP =
+            player.querySelector(
+                ".xp-input"
+            );
+
+
+        let oldValue = "";
+
+
+        if (oldSelect !== null) {
+
+            oldValue =
+                oldSelect.value;
+
+        } else if (oldXP !== null) {
+
+            oldValue =
+                oldXP.value;
+
+        }
+
+
+        /*
+         * 新しい入力欄を作る
+         */
+
+        let newInput;
+
+
+        if (
+            powerTypeElement.value
+            === "rank"
+        ) {
+
+            newInput =
+                createRankSelect();
+
+
+            /*
+             * 以前の値がウデマエなら
+             * その値を維持
+             */
+
+            if (oldSelect !== null) {
+
+                newInput.value =
+                    oldValue;
+
+            }
+
+        } else {
+
+            newInput =
+                createXPInput();
+
+
+            /*
+             * 以前のXPがあれば維持
+             */
+
+            if (oldXP !== null) {
+
+                newInput.value =
+                    oldValue;
+
+            }
+
+        }
+
+
+        /*
+         * 古い実力欄を交換
+         */
+
+        if (oldSelect !== null) {
+
+            player.replaceChild(
+                newInput,
+                oldSelect
+            );
+
+        } else if (oldXP !== null) {
+
+            player.replaceChild(
+                newInput,
+                oldXP
+            );
+
+        }
+
+
+        /*
+         * 名前と観戦状態はそのまま
+         */
+
+        nameInput.value =
+            name;
+
+        spectatorCheck.checked =
+            spectator;
+    }
+}
+
+
+/*
+ * =========================
+ * チーム数変更
+ * =========================
+ */
+
 function updateTeamSizes() {
 
-    teamSizesElement.innerHTML = "";
+    teamSizesElement.innerHTML =
+        "";
+
 
     const teamCount =
-        Number(teamCountElement.value);
+        Number(
+            teamCountElement.value
+        );
 
 
-    for (let i = 0; i < teamCount; i++) {
+    for (
+        let i = 0;
+        i < teamCount;
+        i++
+    ) {
 
         const div =
             document.createElement("div");
 
-        div.className = "team-size";
+
+        div.className =
+            "team-size";
 
 
         const label =
             document.createElement("label");
 
+
         label.textContent =
             "チーム"
-            + String.fromCharCode(65 + i)
+            + String.fromCharCode(
+                65 + i
+            )
             + "：";
 
 
         const input =
             document.createElement("input");
 
-        input.type = "number";
-        input.min = "1";
-        input.value = "1";
+
+        input.type =
+            "number";
+
+
+        input.min =
+            "1";
+
+
+        input.value =
+            "1";
+
 
         input.className =
             "team-size-input";
 
 
-        label.appendChild(input);
-        div.appendChild(label);
+        label.appendChild(
+            input
+        );
 
-        teamSizesElement.appendChild(div);
+
+        div.appendChild(
+            label
+        );
+
+
+        teamSizesElement.appendChild(
+            div
+        );
     }
 }
 
 
 /*
- * 参加者データを取得
+ * =========================
+ * 参加者データ取得
+ * =========================
  */
+
 function getPlayers() {
 
     const playerElements =
-        playersElement.querySelectorAll(".player");
+        playersElement.querySelectorAll(
+            ".player"
+        );
+
 
     const players = [];
 
 
-    for (let i = 0; i < playerElements.length; i++) {
+    for (
+        let i = 0;
+        i < playerElements.length;
+        i++
+    ) {
+
+        const player =
+            playerElements[i];
+
+
+        /*
+         * 名前
+         */
 
         const nameInput =
-            playerElements[i]
-                .querySelector("input[type='text']");
-
-
-        const rankSelect =
-            playerElements[i]
-                .querySelector("select");
-
-
-        const spectatorCheck =
-            playerElements[i]
-                .querySelector(".spectator-check");
+            player.querySelector(
+                "input[type='text']"
+            );
 
 
         const name =
@@ -220,34 +579,100 @@ function getPlayers() {
 
 
         if (name === "") {
+
             continue;
         }
 
 
-        const value =
-            Number(rankSelect.value);
+        /*
+         * 実力
+         */
+
+        let value = 0;
+
+        let powerName = "";
 
 
-        let rankName = "";
+        if (
+            powerTypeElement.value
+            === "rank"
+        ) {
+
+            const rankSelect =
+                player.querySelector(
+                    "select"
+                );
 
 
-        for (let j = 0; j < ranks.length; j++) {
+            value =
+                Number(
+                    rankSelect.value
+                );
 
-            if (ranks[j].value === value) {
 
-                rankName =
-                    ranks[j].name;
+            for (
+                let j = 0;
+                j < ranks.length;
+                j++
+            ) {
 
-                break;
+                if (
+                    ranks[j].value
+                    === value
+                ) {
+
+                    powerName =
+                        ranks[j].name;
+
+                    break;
+                }
             }
+
+        } else {
+
+            const xpInput =
+                player.querySelector(
+                    ".xp-input"
+                );
+
+
+            value =
+                Number(
+                    xpInput.value
+                );
+
+
+            powerName =
+                String(value)
+                + " XP";
         }
 
 
+        /*
+         * 観戦
+         */
+
+        const spectatorCheck =
+            player.querySelector(
+                ".spectator-check"
+            );
+
+
+        /*
+         * データ保存
+         */
+
         players.push({
+
             name: name,
-            rankName: rankName,
+
+            powerName: powerName,
+
             value: value,
-            spectator: spectatorCheck.checked
+
+            spectator:
+                spectatorCheck.checked
+
         });
     }
 
@@ -257,24 +682,36 @@ function getPlayers() {
 
 
 /*
- * チーム人数を取得
+ * =========================
+ * チーム人数取得
+ * =========================
  */
+
 function getTeamSizes() {
 
     const inputs =
-        teamSizesElement
-            .querySelectorAll(".team-size-input");
+        teamSizesElement.querySelectorAll(
+            ".team-size-input"
+        );
+
 
     const sizes = [];
 
 
-    for (let i = 0; i < inputs.length; i++) {
+    for (
+        let i = 0;
+        i < inputs.length;
+        i++
+    ) {
 
         const size =
-            Number(inputs[i].value);
+            Number(
+                inputs[i].value
+            );
 
 
         if (size < 1) {
+
             return null;
         }
 
@@ -288,26 +725,46 @@ function getTeamSizes() {
 
 
 /*
- * チーム間の実力差を計算
+ * =========================
+ * チーム間の実力差
+ * =========================
  */
-function calculateDifference(teams) {
+
+function calculateDifference(
+    teams
+) {
 
     let min =
         teams[0].total;
+
 
     let max =
         teams[0].total;
 
 
-    for (let i = 1; i < teams.length; i++) {
+    for (
+        let i = 1;
+        i < teams.length;
+        i++
+    ) {
 
-        if (teams[i].total < min) {
-            min = teams[i].total;
+        if (
+            teams[i].total
+            < min
+        ) {
+
+            min =
+                teams[i].total;
         }
 
 
-        if (teams[i].total > max) {
-            max = teams[i].total;
+        if (
+            teams[i].total
+            > max
+        ) {
+
+            max =
+                teams[i].total;
         }
     }
 
@@ -317,19 +774,37 @@ function calculateDifference(teams) {
 
 
 /*
+ * =========================
  * チーム分け
+ * =========================
  */
-function dividePlayers(players, teamSizes) {
+
+function dividePlayers(
+    players,
+    teamSizes
+) {
 
     const teams = [];
 
 
-    for (let i = 0; i < teamSizes.length; i++) {
+    /*
+     * チーム作成
+     */
+
+    for (
+        let i = 0;
+        i < teamSizes.length;
+        i++
+    ) {
 
         teams.push({
+
             players: [],
+
             total: 0,
+
             size: teamSizes[i]
+
         });
     }
 
@@ -337,39 +812,67 @@ function dividePlayers(players, teamSizes) {
     /*
      * 実力の高い順
      */
+
     const sortedPlayers =
-    [...players];
+        [...players];
 
-sortedPlayers.sort(
-    function(a, b) {
 
-        if (b.value !== a.value) {
-            return b.value - a.value;
+    sortedPlayers.sort(
+        function(a, b) {
+
+            if (
+                b.value
+                !== a.value
+            ) {
+
+                return (
+                    b.value
+                    - a.value
+                );
+            }
+
+
+            return (
+                Math.random()
+                - 0.5
+            );
         }
+    );
 
-        return Math.random() - 0.5;
-    }
-);
 
     /*
      * 各チームに配置
      */
-    for (let i = 0; i < sortedPlayers.length; i++) {
 
-        let targetTeam = -1;
+    for (
+        let i = 0;
+        i < sortedPlayers.length;
+        i++
+    ) {
+
+        let targetTeam =
+            -1;
 
 
-        for (let j = 0; j < teams.length; j++) {
+        for (
+            let j = 0;
+            j < teams.length;
+            j++
+        ) {
 
             if (
                 teams[j].players.length
                 >= teams[j].size
             ) {
+
                 continue;
             }
 
 
-            if (targetTeam === -1) {
+            if (
+                targetTeam
+                === -1
+            ) {
 
                 targetTeam = j;
 
@@ -383,22 +886,31 @@ sortedPlayers.sort(
         }
 
 
-        if (targetTeam !== -1) {
+        if (
+            targetTeam
+            !== -1
+        ) {
 
             teams[targetTeam]
                 .players
-                .push(sortedPlayers[i]);
+                .push(
+                    sortedPlayers[i]
+                );
 
 
-            teams[targetTeam].total +=
+            teams[targetTeam].total
+                +=
                 sortedPlayers[i].value;
         }
     }
 
 
     /*
-     * メンバー交換で実力差を小さくする
+     * =========================
+     * メンバー交換
+     * =========================
      */
+
     let changed = true;
 
 
@@ -408,10 +920,16 @@ sortedPlayers.sort(
 
 
         let currentDifference =
-            calculateDifference(teams);
+            calculateDifference(
+                teams
+            );
 
 
-        for (let a = 0; a < teams.length; a++) {
+        for (
+            let a = 0;
+            a < teams.length;
+            a++
+        ) {
 
             for (
                 let b = a + 1;
@@ -421,13 +939,15 @@ sortedPlayers.sort(
 
                 for (
                     let i = 0;
-                    i < teams[a].players.length;
+                    i <
+                    teams[a].players.length;
                     i++
                 ) {
 
                     for (
                         let j = 0;
-                        j < teams[b].players.length;
+                        j <
+                        teams[b].players.length;
                         j++
                     ) {
 
@@ -468,7 +988,9 @@ sortedPlayers.sort(
 
 
                         const newDifference =
-                            calculateDifference(teams);
+                            calculateDifference(
+                                teams
+                            );
 
 
                         if (
@@ -513,17 +1035,29 @@ sortedPlayers.sort(
 
 
 /*
- * 結果を表示
+ * =========================
+ * 結果表示
+ * =========================
  */
-function showResult(teams, spectators) {
 
-    resultElement.innerHTML = "";
+function showResult(
+    teams,
+    spectators
+) {
+
+    resultElement.innerHTML =
+        "";
 
 
     /*
      * チーム表示
      */
-    for (let i = 0; i < teams.length; i++) {
+
+    for (
+        let i = 0;
+        i < teams.length;
+        i++
+    ) {
 
         const team =
             teams[i];
@@ -531,6 +1065,7 @@ function showResult(teams, spectators) {
 
         const div =
             document.createElement("div");
+
 
         div.className =
             "result-team";
@@ -542,18 +1077,23 @@ function showResult(teams, spectators) {
 
         title.textContent =
             "チーム"
-            + String.fromCharCode(65 + i)
+            + String.fromCharCode(
+                65 + i
+            )
             + "（"
             + team.players.length
             + "人）";
 
 
-        div.appendChild(title);
+        div.appendChild(
+            title
+        );
 
 
         /*
-         * メンバー表示
+         * メンバー
          */
+
         for (
             let j = 0;
             j < team.players.length;
@@ -565,78 +1105,145 @@ function showResult(teams, spectators) {
 
 
             const playerDiv =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
+
 
             playerDiv.className =
                 "player-result";
 
 
             const nameSpan =
-                document.createElement("span");
+                document.createElement(
+                    "span"
+                );
 
 
             nameSpan.textContent =
                 player.name;
 
 
-            const rankSpan =
-                document.createElement("span");
+            const powerSpan =
+                document.createElement(
+                    "span"
+                );
 
 
-            rankSpan.textContent =
-                player.rankName
-                + " ("
-                + player.value
-                + ")";
+            if (
+                powerTypeElement.value
+                === "rank"
+            ) {
+
+                powerSpan.textContent =
+                    player.powerName
+                    + " ("
+                    + player.value
+                    + ")";
+
+            } else {
+
+                powerSpan.textContent =
+                    player.value
+                    + " XP";
+            }
 
 
-            playerDiv.appendChild(nameSpan);
-            playerDiv.appendChild(rankSpan);
+            playerDiv.appendChild(
+                nameSpan
+            );
 
-            div.appendChild(playerDiv);
+
+            playerDiv.appendChild(
+                powerSpan
+            );
+
+
+            div.appendChild(
+                playerDiv
+            );
         }
 
 
         /*
          * 合計実力
          */
+
         const total =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
 
         total.className =
             "total";
 
 
-        total.textContent =
-            "合計実力："
-            + team.total;
+        if (
+            powerTypeElement.value
+            === "rank"
+        ) {
+
+            total.textContent =
+                "合計実力："
+                + team.total;
+
+        } else {
+
+            total.textContent =
+                "合計XP："
+                + team.total;
+        }
 
 
-        div.appendChild(total);
+        div.appendChild(
+            total
+        );
 
-        resultElement.appendChild(div);
+
+        resultElement.appendChild(
+            div
+        );
     }
 
 
     /*
+     * =========================
      * 実力差
+     * =========================
      */
+
     const difference =
-        calculateDifference(teams);
+        calculateDifference(
+            teams
+        );
 
 
     const differenceDiv =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
 
     differenceDiv.className =
         "difference";
 
 
-    differenceDiv.textContent =
-        "チーム間の実力差："
-        + difference;
+    if (
+        powerTypeElement.value
+        === "rank"
+    ) {
+
+        differenceDiv.textContent =
+            "チーム間の実力差："
+            + difference;
+
+    } else {
+
+        differenceDiv.textContent =
+            "チーム間のXP差："
+            + difference;
+    }
 
 
     resultElement.appendChild(
@@ -645,12 +1252,19 @@ function showResult(teams, spectators) {
 
 
     /*
+     * =========================
      * 観戦者
+     * =========================
      */
-    if (spectators.length > 0) {
+
+    if (
+        spectators.length > 0
+    ) {
 
         const spectatorTeam =
-            document.createElement("div");
+            document.createElement(
+                "div"
+            );
 
 
         spectatorTeam.className =
@@ -658,7 +1272,9 @@ function showResult(teams, spectators) {
 
 
         const spectatorTitle =
-            document.createElement("h3");
+            document.createElement(
+                "h3"
+            );
 
 
         spectatorTitle.textContent =
@@ -681,7 +1297,9 @@ function showResult(teams, spectators) {
 
 
             const playerDiv =
-                document.createElement("div");
+                document.createElement(
+                    "div"
+                );
 
 
             playerDiv.className =
@@ -689,26 +1307,49 @@ function showResult(teams, spectators) {
 
 
             const nameSpan =
-                document.createElement("span");
+                document.createElement(
+                    "span"
+                );
 
 
             nameSpan.textContent =
                 player.name;
 
 
-            const rankSpan =
-                document.createElement("span");
+            const powerSpan =
+                document.createElement(
+                    "span"
+                );
 
 
-            rankSpan.textContent =
-                player.rankName
-                + " ("
-                + player.value
-                + ")";
+            if (
+                powerTypeElement.value
+                === "rank"
+            ) {
+
+                powerSpan.textContent =
+                    player.powerName
+                    + " ("
+                    + player.value
+                    + ")";
+
+            } else {
+
+                powerSpan.textContent =
+                    player.value
+                    + " XP";
+            }
 
 
-            playerDiv.appendChild(nameSpan);
-            playerDiv.appendChild(rankSpan);
+            playerDiv.appendChild(
+                nameSpan
+            );
+
+
+            playerDiv.appendChild(
+                powerSpan
+            );
+
 
             spectatorTeam.appendChild(
                 playerDiv
@@ -722,6 +1363,10 @@ function showResult(teams, spectators) {
     }
 
 
+    /*
+     * 結果を表示
+     */
+
     resultSection.classList.remove(
         "hidden"
     );
@@ -729,8 +1374,11 @@ function showResult(teams, spectators) {
 
 
 /*
+ * =========================
  * 参加者追加ボタン
+ * =========================
  */
+
 addPlayerButton.addEventListener(
     "click",
     addPlayer
@@ -738,8 +1386,35 @@ addPlayerButton.addEventListener(
 
 
 /*
- * チーム数変更
+ * =========================
+ * ウデマエ / XP切り替え
+ * =========================
  */
+
+powerTypeElement.addEventListener(
+    "change",
+    function() {
+
+        updatePowerInputs();
+
+        /*
+         * 方式を変更したら
+         * 古い結果を非表示
+         */
+
+        resultSection.classList.add(
+            "hidden"
+        );
+    }
+);
+
+
+/*
+ * =========================
+ * チーム数変更
+ * =========================
+ */
+
 teamCountElement.addEventListener(
     "change",
     updateTeamSizes
@@ -747,8 +1422,11 @@ teamCountElement.addEventListener(
 
 
 /*
+ * =========================
  * チーム分けボタン
+ * =========================
  */
+
 divideButton.addEventListener(
     "click",
     function() {
@@ -760,21 +1438,27 @@ divideButton.addEventListener(
         /*
          * 観戦者を除外
          */
+
         const players =
             allPlayers.filter(
                 function(player) {
+
                     return !player.spectator;
+
                 }
             );
 
 
         /*
-         * 観戦者だけ取得
+         * 観戦者
          */
+
         const spectators =
             allPlayers.filter(
                 function(player) {
+
                     return player.spectator;
+
                 }
             );
 
@@ -784,9 +1468,12 @@ divideButton.addEventListener(
 
 
         /*
-         * 参加者がいない
+         * 参加者チェック
          */
-        if (players.length === 0) {
+
+        if (
+            players.length === 0
+        ) {
 
             alert(
                 "チーム分けする参加者がいません。"
@@ -797,9 +1484,43 @@ divideButton.addEventListener(
 
 
         /*
+         * XPが未入力の場合
+         */
+
+        if (
+            powerTypeElement.value
+            === "xp"
+        ) {
+
+            for (
+                let i = 0;
+                i < players.length;
+                i++
+            ) {
+
+                if (
+                    isNaN(
+                        players[i].value
+                    )
+                ) {
+
+                    alert(
+                        "XPを入力してください。"
+                    );
+
+                    return;
+                }
+            }
+        }
+
+
+        /*
          * チーム人数チェック
          */
-        if (teamSizes === null) {
+
+        if (
+            teamSizes === null
+        ) {
 
             alert(
                 "チーム人数を正しく入力してください。"
@@ -810,12 +1531,17 @@ divideButton.addEventListener(
 
 
         /*
-         * チーム人数の合計
+         * チーム人数合計
          */
+
         let totalSize = 0;
 
 
-        for (let i = 0; i < teamSizes.length; i++) {
+        for (
+            let i = 0;
+            i < teamSizes.length;
+            i++
+        ) {
 
             totalSize +=
                 teamSizes[i];
@@ -823,9 +1549,13 @@ divideButton.addEventListener(
 
 
         /*
-         * 人数が一致するか確認
+         * 人数一致チェック
          */
-        if (totalSize !== players.length) {
+
+        if (
+            totalSize
+            !== players.length
+        ) {
 
             alert(
                 "チーム人数の合計と参加者数が一致していません。\n"
@@ -844,6 +1574,7 @@ divideButton.addEventListener(
         /*
          * チーム分け
          */
+
         const teams =
             dividePlayers(
                 players,
@@ -854,6 +1585,7 @@ divideButton.addEventListener(
         /*
          * 結果表示
          */
+
         showResult(
             teams,
             spectators
@@ -863,16 +1595,24 @@ divideButton.addEventListener(
 
 
 /*
+ * =========================
  * 初期状態
+ * =========================
  */
+
 addPlayer();
+
 addPlayer();
 
 updateTeamSizes();
 
+
 /*
- * 振り直しボタン
+ * =========================
+ * 振り直し
+ * =========================
  */
+
 redrawButton.addEventListener(
     "click",
     function() {
@@ -880,28 +1620,38 @@ redrawButton.addEventListener(
         const allPlayers =
             getPlayers();
 
+
         const players =
             allPlayers.filter(
                 function(player) {
+
                     return !player.spectator;
+
                 }
             );
+
 
         const spectators =
             allPlayers.filter(
                 function(player) {
+
                     return player.spectator;
+
                 }
             );
+
 
         const teamSizes =
             getTeamSizes();
 
 
         /*
-         * まだチーム分けしていない場合
+         * 参加者チェック
          */
-        if (players.length === 0) {
+
+        if (
+            players.length === 0
+        ) {
 
             alert(
                 "チーム分けする参加者がいません。"
@@ -912,9 +1662,43 @@ redrawButton.addEventListener(
 
 
         /*
-         * チーム人数を確認
+         * XPチェック
          */
-        if (teamSizes === null) {
+
+        if (
+            powerTypeElement.value
+            === "xp"
+        ) {
+
+            for (
+                let i = 0;
+                i < players.length;
+                i++
+            ) {
+
+                if (
+                    isNaN(
+                        players[i].value
+                    )
+                ) {
+
+                    alert(
+                        "XPを入力してください。"
+                    );
+
+                    return;
+                }
+            }
+        }
+
+
+        /*
+         * チーム人数チェック
+         */
+
+        if (
+            teamSizes === null
+        ) {
 
             alert(
                 "チーム人数を正しく入力してください。"
@@ -924,16 +1708,28 @@ redrawButton.addEventListener(
         }
 
 
+        /*
+         * 人数合計
+         */
+
         let totalSize = 0;
 
-        for (let i = 0; i < teamSizes.length; i++) {
+
+        for (
+            let i = 0;
+            i < teamSizes.length;
+            i++
+        ) {
 
             totalSize +=
                 teamSizes[i];
         }
 
 
-        if (totalSize !== players.length) {
+        if (
+            totalSize
+            !== players.length
+        ) {
 
             alert(
                 "チーム人数の合計と参加者数が一致していません。\n"
@@ -952,9 +1748,15 @@ redrawButton.addEventListener(
         /*
          * ランダムに並べ替える
          */
+
         players.sort(
             function() {
-                return Math.random() - 0.5;
+
+                return (
+                    Math.random()
+                    - 0.5
+                );
+
             }
         );
 
@@ -962,6 +1764,7 @@ redrawButton.addEventListener(
         /*
          * チーム分け
          */
+
         const teams =
             dividePlayers(
                 players,
@@ -972,6 +1775,7 @@ redrawButton.addEventListener(
         /*
          * 結果表示
          */
+
         showResult(
             teams,
             spectators
