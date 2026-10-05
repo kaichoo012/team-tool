@@ -1,36 +1,72 @@
 <!DOCTYPE html>
-
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>スプラチーム分けツール</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
 <div class="container">
 
     <h1>スプラチーム分けツール</h1>
 
+
     <!-- 参加者 -->
     <section>
+
         <h2>参加者</h2>
 
+
+        <!-- 実力方式 -->
+        <div class="power-setting">
+
+            <label for="powerType">
+                実力方式：
+            </label>
+
+            <select id="powerType">
+
+                <option value="rank">
+                    ウデマエ
+                </option>
+
+                <option value="xp">
+                    XP
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- 参加者一覧 -->
         <div id="players"></div>
+
 
         <button id="addPlayerButton" class="add-button">
             ＋ 参加者を追加
         </button>
+
     </section>
+
 
     <!-- チーム設定 -->
     <section>
+
         <h2>チーム設定</h2>
 
-        <label>
+
+        <label for="teamCount">
+
             チーム数：
+
             <select id="teamCount">
+
                 <option value="2">2チーム</option>
                 <option value="3">3チーム</option>
                 <option value="4">4チーム</option>
@@ -38,27 +74,41 @@
                 <option value="6">6チーム</option>
                 <option value="7">7チーム</option>
                 <option value="8">8チーム</option>
+
             </select>
+
         </label>
 
+
         <div id="teamSizes"></div>
+
     </section>
 
+
+    <!-- チーム分け -->
     <button id="divideButton" class="divide-button">
         🎲 チーム分け！
     </button>
 
+
+    <!-- 振り直し -->
     <button id="redrawButton" class="redraw-button">
-    🔄 振り直し！
+        🔄 振り直し！
     </button>
+
 
     <!-- 結果 -->
     <section id="resultSection" class="hidden">
+
         <h2>チーム分け結果</h2>
+
         <div id="result"></div>
+
     </section>
 
+
 </div>
+
 
 <script src="script.js"></script>
 
