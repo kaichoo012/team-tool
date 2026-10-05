@@ -1,180 +1,350 @@
 * {
-  box-sizing: border-box;
-  }
+    box-sizing: border-box;
+}
+
 
 body {
-margin: 0;
-padding: 30px 15px;
-background: #f3f4f6;
-font-family: Arial, "Yu Gothic", sans-serif;
-color: #333;
+    margin: 0;
+    padding: 30px 15px;
+
+    background: #f3f4f6;
+
+    font-family: Arial, "Yu Gothic", sans-serif;
+
+    color: #333;
 }
+
 
 .container {
-max-width: 800px;
-margin: 0 auto;
+    max-width: 800px;
+
+    margin: 0 auto;
 }
+
 
 h1 {
-text-align: center;
-margin-bottom: 30px;
+    text-align: center;
+
+    margin-bottom: 30px;
 }
+
 
 section {
-background: white;
-padding: 20px;
-margin-bottom: 20px;
-border-radius: 12px;
-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    background: white;
+
+    padding: 20px;
+
+    margin-bottom: 20px;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 2px 8px rgba(0, 0, 0, 0.08);
 }
+
 
 h2 {
-margin-top: 0;
+    margin-top: 0;
 }
+
+
+/* =========================
+   実力方式
+   ========================= */
+
+.power-setting {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 20px;
+}
+
+
+.power-setting select {
+    padding: 8px 10px;
+
+    border: 1px solid #ccc;
+
+    border-radius: 6px;
+
+    font-size: 15px;
+}
+
+
+/* =========================
+   参加者
+   ========================= */
 
 .player {
-display: flex;
-gap: 10px;
-margin-bottom: 10px;
+    display: flex;
+
+    gap: 10px;
+
+    margin-bottom: 10px;
+
+    align-items: center;
 }
 
-.player input {
-flex: 1;
-padding: 10px;
-border: 1px solid #ccc;
-border-radius: 6px;
+
+.player > input[type="text"] {
+    flex: 1;
+
+    min-width: 0;
+
+    padding: 10px;
+
+    border: 1px solid #ccc;
+
+    border-radius: 6px;
 }
+
 
 .player select {
-width: 130px;
-padding: 10px;
-border: 1px solid #ccc;
-border-radius: 6px;
+    width: 130px;
+
+    padding: 10px;
+
+    border: 1px solid #ccc;
+
+    border-radius: 6px;
 }
+
+
+.player > input[type="number"] {
+    width: 130px;
+
+    padding: 10px;
+
+    border: 1px solid #ccc;
+
+    border-radius: 6px;
+}
+
 
 .remove-button {
-width: 45px;
-border: none;
-border-radius: 6px;
-background: #e5e7eb;
-cursor: pointer;
+    width: 45px;
+
+    height: 40px;
+
+    border: none;
+
+    border-radius: 6px;
+
+    background: #e5e7eb;
+
+    cursor: pointer;
+
+    flex-shrink: 0;
 }
+
 
 .remove-button:hover {
-background: #d1d5db;
+    background: #d1d5db;
 }
 
-.add-button {
-padding: 10px 15px;
-border: none;
-border-radius: 6px;
-background: #e5e7eb;
-cursor: pointer;
-}
 
-.add-button:hover {
-background: #d1d5db;
-}
-
-#teamSizes {
-margin-top: 15px;
-}
-
-.team-size {
-margin-bottom: 10px;
-}
-
-.team-size input {
-width: 80px;
-padding: 8px;
-margin-left: 10px;
-}
-
-.divide-button {
-display: block;
-width: 100%;
-padding: 15px;
-margin-bottom: 20px;
-border: none;
-border-radius: 10px;
-background: #333;
-color: white;
-font-size: 18px;
-font-weight: bold;
-cursor: pointer;
-}
-
-.divide-button:hover {
-background: #555;
-}
-
-.hidden {
-display: none;
-}
-
-.result-team {
-margin-bottom: 20px;
-padding: 15px;
-border: 1px solid #ddd;
-border-radius: 10px;
-}
-
-.result-team h3 {
-margin-top: 0;
-}
-
-.player-result {
-display: flex;
-justify-content: space-between;
-padding: 6px 0;
-border-bottom: 1px solid #eee;
-}
-
-.total {
-margin-top: 10px;
-font-weight: bold;
-text-align: right;
-}
-
-.difference {
-text-align: center;
-margin-top: 20px;
-font-weight: bold;
-}
+/* =========================
+   観戦
+   ========================= */
 
 .spectator {
     display: flex;
+
     align-items: center;
+
     gap: 5px;
+
     white-space: nowrap;
+
+    flex-shrink: 0;
 }
+
 
 .spectator input {
     width: 16px;
+
     height: 16px;
+
+    margin: 0;
 }
+
 
 .spectator label {
     cursor: pointer;
 }
 
-.redraw-button {
-    display: block;
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 20px;
+
+/* =========================
+   参加者追加
+   ========================= */
+
+.add-button {
+    padding: 10px 15px;
+
     border: none;
-    border-radius: 10px;
+
+    border-radius: 6px;
+
     background: #e5e7eb;
-    color: #333;
-    font-size: 16px;
-    font-weight: bold;
+
     cursor: pointer;
 }
+
+
+.add-button:hover {
+    background: #d1d5db;
+}
+
+
+/* =========================
+   チーム人数
+   ========================= */
+
+#teamSizes {
+    margin-top: 15px;
+}
+
+
+.team-size {
+    margin-bottom: 10px;
+}
+
+
+.team-size input {
+    width: 80px;
+
+    padding: 8px;
+
+    margin-left: 10px;
+}
+
+
+/* =========================
+   チーム分けボタン
+   ========================= */
+
+.divide-button {
+    display: block;
+
+    width: 100%;
+
+    padding: 15px;
+
+    margin-bottom: 20px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #333;
+
+    color: white;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+.divide-button:hover {
+    background: #555;
+}
+
+
+/* =========================
+   振り直し
+   ========================= */
+
+.redraw-button {
+    display: block;
+
+    width: 100%;
+
+    padding: 12px;
+
+    margin-bottom: 20px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #e5e7eb;
+
+    color: #333;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
 
 .redraw-button:hover {
     background: #d1d5db;
 }
+
+
+/* =========================
+   結果
+   ========================= */
+
+.hidden {
+    display: none;
+}
+
+
+.result-team {
+    margin-bottom: 20px;
+
+    padding: 15px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 10px;
+}
+
+
+.result-team h3 {
+    margin-top: 0;
+}
+
+
+.player-result {
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    padding: 6px 0;
+
+    border-bottom: 1px solid #eee;
+}
+
+
+.total {
+    margin-top: 10px;
+
+    font-weight: bold;
+
+    text-align: right;
+}
+
+
+.difference {
+    text-align: center;
+
+    margin-top: 20px;
+
+    font-weight: bold;
+}
+
 
 /* =========================
    スマホ対応
@@ -186,119 +356,203 @@ font-weight: bold;
         padding: 15px 8px;
     }
 
+
     .container {
         width: 100%;
     }
 
+
     h1 {
         font-size: 24px;
+
         margin-bottom: 20px;
     }
 
+
     section {
         padding: 15px;
+
         margin-bottom: 15px;
     }
+
 
     h2 {
         font-size: 20px;
     }
 
+
+    /* 実力方式 */
+
+    .power-setting {
+        flex-wrap: wrap;
+
+        gap: 8px;
+
+        margin-bottom: 15px;
+    }
+
+
+    .power-setting select {
+        padding: 8px;
+
+        font-size: 16px;
+    }
+
+
     /* 参加者 */
+
     .player {
         display: grid;
-        grid-template-columns: 1fr auto auto;
+
+        grid-template-columns:
+            minmax(0, 1fr)
+            90px
+            auto
+            38px;
+
         gap: 6px;
+
         align-items: center;
     }
 
-    .player input {
+
+    .player > input[type="text"] {
         width: 100%;
+
         min-width: 0;
+
         padding: 10px 8px;
+
         font-size: 16px;
     }
 
+
     .player select {
-        width: 100px;
+        width: 90px;
+
         padding: 10px 5px;
+
         font-size: 14px;
     }
+
+
+    .player > input[type="number"] {
+        width: 90px;
+
+        padding: 10px 5px;
+
+        font-size: 16px;
+    }
+
 
     .spectator {
         gap: 3px;
+
         font-size: 14px;
     }
 
+
     .spectator input {
         width: 18px;
+
         height: 18px;
     }
 
+
     .remove-button {
         width: 38px;
+
         height: 38px;
+
         font-size: 18px;
     }
 
+
     /* 参加者追加 */
+
     .add-button {
         width: 100%;
+
         padding: 12px;
+
         font-size: 16px;
     }
+
 
     /* チーム数 */
+
     #teamCount {
         padding: 8px;
+
         font-size: 16px;
     }
 
+
     /* チーム人数 */
+
     .team-size {
         margin-bottom: 12px;
     }
 
+
     .team-size input {
         width: 70px;
+
         padding: 8px;
+
         margin-left: 5px;
+
         font-size: 16px;
     }
 
-    /* チーム分けボタン */
+
+    /* チーム分け */
+
     .divide-button {
         padding: 14px;
+
         font-size: 17px;
     }
 
-    /* 振り直しボタン */
+
+    /* 振り直し */
+
     .redraw-button {
         padding: 12px;
+
         font-size: 16px;
     }
 
+
     /* 結果 */
+
     .result-team {
         padding: 12px;
+
         margin-bottom: 15px;
     }
+
 
     .result-team h3 {
         font-size: 18px;
     }
 
+
     .player-result {
         padding: 8px 0;
+
         font-size: 15px;
     }
+
 
     .total {
         font-size: 15px;
     }
 
+
     .difference {
         font-size: 16px;
+
         padding: 5px;
     }
 }
