@@ -556,3 +556,90 @@ h2 {
         padding: 5px;
     }
 }
+
+/* =========================
+   武器ルールルーレット
+   ========================= */
+
+.weapon-rule-section {
+    margin-top: 20px;
+}
+
+
+.weapon-rule-button {
+    display: block;
+
+    width: 100%;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #333;
+
+    color: white;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+.weapon-rule-button:hover {
+    background: #555;
+}
+
+
+.weapon-rule-result {
+    margin-top: 20px;
+
+    padding: 20px;
+
+    border: 2px solid #ddd;
+
+    border-radius: 10px;
+
+    text-align: center;
+
+    font-size: 24px;
+
+    font-weight: bold;
+
+    background: #f9fafb;
+
+    min-height: 70px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+
+/* =========================
+   武器ルールルーレット
+   スマホ対応
+   ========================= */
+
+@media (max-width: 600px) {
+
+    .weapon-rule-button {
+        padding: 14px;
+
+        font-size: 17px;
+    }
+
+
+    .weapon-rule-result {
+        padding: 15px;
+
+        font-size: 20px;
+
+        min-height: 60px;
+    }
+}
