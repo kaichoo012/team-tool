@@ -671,7 +671,9 @@ function getPlayers() {
             value: value,
 
             spectator:
-                spectatorCheck.checked
+                spectatorCheck.checked,
+
+            weaponType: ""
 
         });
     }
@@ -1159,6 +1161,39 @@ function showResult(
             );
 
 
+            /*
+             * 武器種
+             *
+             * 「参加者に適用する」が
+             * ONのときだけ表示
+             */
+
+            if (
+                weaponTypeApply.checked
+                && player.weaponType !== ""
+            ) {
+
+                const weaponTypeSpan =
+                    document.createElement(
+                        "span"
+                    );
+
+
+                weaponTypeSpan.className =
+                    "player-weapon-type";
+
+
+                weaponTypeSpan.textContent =
+                    "🎮 "
+                    + player.weaponType;
+
+
+                playerDiv.appendChild(
+                    weaponTypeSpan
+                );
+            }
+
+
             div.appendChild(
                 playerDiv
             );
@@ -1572,6 +1607,29 @@ divideButton.addEventListener(
 
 
         /*
+         * =========================
+         * 武器種を参加者に適用
+         * =========================
+         */
+
+        if (
+            weaponTypeApply.checked
+        ) {
+
+            for (
+                let i = 0;
+                i < players.length;
+                i++
+            ) {
+
+                players[i].weaponType =
+                    getRandomWeaponType();
+
+            }
+        }
+
+
+        /*
          * チーム分け
          */
 
@@ -1762,6 +1820,29 @@ redrawButton.addEventListener(
 
 
         /*
+         * =========================
+         * 武器種を再抽選
+         * =========================
+         */
+
+        if (
+            weaponTypeApply.checked
+        ) {
+
+            for (
+                let i = 0;
+                i < players.length;
+                i++
+            ) {
+
+                players[i].weaponType =
+                    getRandomWeaponType();
+
+            }
+        }
+
+
+        /*
          * チーム分け
          */
 
@@ -1782,6 +1863,7 @@ redrawButton.addEventListener(
         );
     }
 );
+
 
 /*
  * =========================
@@ -1830,6 +1912,85 @@ weaponRuleButton.addEventListener(
 
         weaponRuleResult.textContent =
             selectedRule;
+
+    }
+);
+
+
+/*
+ * =========================
+ * 武器種ルーレット
+ * =========================
+ */
+
+const weaponTypeButton =
+    document.getElementById("weaponTypeButton");
+
+const weaponTypeResult =
+    document.getElementById("weaponTypeResult");
+
+const weaponTypeApply =
+    document.getElementById("weaponTypeApply");
+
+
+const weaponTypes = [
+
+    "シューター",
+
+    "チャージャー",
+
+    "ブラスター",
+
+    "ローラー",
+
+    "フデ",
+
+    "スロッシャー",
+
+    "スピナー",
+
+    "マニューバー",
+
+    "シェルター",
+
+    "ワイパー",
+
+    "ストリンガー"
+
+];
+
+
+/*
+ * 武器種をランダムで1つ取得
+ */
+
+function getRandomWeaponType() {
+
+    const randomIndex =
+        Math.floor(
+            Math.random()
+            * weaponTypes.length
+        );
+
+
+    return weaponTypes[randomIndex];
+}
+
+
+/*
+ * 通常の武器種ルーレット
+ */
+
+weaponTypeButton.addEventListener(
+    "click",
+    function() {
+
+        const selectedWeaponType =
+            getRandomWeaponType();
+
+
+        weaponTypeResult.textContent =
+            selectedWeaponType;
 
     }
 );
