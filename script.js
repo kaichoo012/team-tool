@@ -1782,3 +1782,54 @@ redrawButton.addEventListener(
         );
     }
 );
+
+/*
+ * =========================
+ * 武器ルールルーレット
+ * =========================
+ */
+
+const weaponRuleButton =
+    document.getElementById("weaponRuleButton");
+
+const weaponRuleResult =
+    document.getElementById("weaponRuleResult");
+
+
+const weaponRules = [
+
+    "メインのみ",
+
+    "メイン＋サブのみ",
+
+    "武器ランダム",
+
+    "全部 OK",
+
+    "メイン＋スペシャルのみ",
+
+    "サブ＋スペシャルのみ"
+
+];
+
+
+weaponRuleButton.addEventListener(
+    "click",
+    function() {
+
+        const randomIndex =
+            Math.floor(
+                Math.random()
+                * weaponRules.length
+            );
+
+
+        const selectedRule =
+            weaponRules[randomIndex];
+
+
+        weaponRuleResult.textContent =
+            selectedRule;
+
+    }
+);
