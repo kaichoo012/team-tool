@@ -643,3 +643,94 @@ h2 {
         min-height: 60px;
     }
 }
+
+/* =========================
+   武器種ルーレット
+   ========================= */
+
+.weapon-type-section {
+    margin-top: 20px;
+}
+
+.weapon-type-button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    background: #333;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.weapon-type-button:hover {
+    background: #555;
+}
+
+.weapon-type-result {
+    margin-top: 20px;
+    padding: 20px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    background: #f9fafb;
+    min-height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.weapon-type-apply {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 15px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.weapon-type-apply input {
+    width: auto;
+    margin: 0;
+}
+
+
+/* =========================
+   参加者の武器種表示
+   ========================= */
+
+.player-weapon-type {
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+
+/* =========================
+   武器種ルーレット
+   スマホ対応
+   ========================= */
+
+@media (max-width: 600px) {
+
+    .weapon-type-button {
+        padding: 14px;
+        font-size: 17px;
+    }
+
+    .weapon-type-result {
+        padding: 15px;
+        font-size: 20px;
+        min-height: 60px;
+    }
+
+    .weapon-type-apply {
+        font-size: 15px;
+    }
+
+}
